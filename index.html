@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UX Portfolio — Maya Chen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0A0A0F;
+    color: #E8E8F0;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Sidebar Navigation */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    background: #0D0D12;
+    border-right: 1px solid #1E1E28;
+    padding: 48px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 100;
+  }
+
+  .logo h1 {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #A8A8C0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 8px;
+  }
+
+  .logo p {
+    font-size: 13px;
+    color: #5E5E72;
+    font-weight: 400;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 60px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #A8A8C0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .nav-link:hover {
+    background: #1A1A24;
+    color: #FFFFFF;
+  }
+
+  .nav-link.active {
+    background: #1E1E2A;
+    border-left: 2px solid #6C63FF;
+  }
+
+  .nav-icon {
+    font-size: 18px;
+    width: 24px;
+  }
+
+  .sidebar-footer {
+    font-size: 12px;
+    color: #3E3E4A;
+    border-top: 1px solid #1E1E28;
+    padding-top: 24px;
+  }
+
+  /* Main Content */
+  .main {
+    margin-left: 280px;
+    min-height: 100vh;
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    border-bottom: 1px solid #1E1E28;
+    background: linear-gradient(180deg, #0A0A0F 0%, #0F0F15 100%);
+  }
+
+  .hero-content {
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #6C63FF;
+    background: rgba(108, 99, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #C8C8E0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: #8E8EA8;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  /* Section Styles */
+  section {
+    padding: 80px;
+    border-bottom: 1px solid #1E1E28;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #6C63FF;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    color: #FFFFFF;
+  }
+
+  /* Projects Grid */
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .project-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .project-image {
+  
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 16/10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+
+  .project-placeholder {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+	border-radius: 8px;
+  }
+
+  .project-info h3 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+    color: #FFFFFF;
+  }
+
+  .project-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 4px 12px;
+    background: #1A1A24;
+    border-radius: 20px;
+    color: #A8A8C0;
+    border: 1px solid #2A2A36;
+  }
+
+  .project-info p {
+    color: #8E8EA8;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #6C63FF;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: gap 0.2s ease;
+    cursor: pointer;
+  }
+
+  .project-link:hover {
+    gap: 12px;
+  }
+
+  /* Case Study Sections */
+  .case-study {
+    padding: 0;
+  }
+
+  .case-hero {
+    padding: 60px 80px;
+    background: linear-gradient(135deg, #0F0F18 0%, #0A0A0F 100%);
+    border-bottom: 1px solid #1E1E28;
+  }
+
+  .case-hero h2 {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin: 16px 0;
+  }
+
+  .case-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 80px;
+  }
+
+  .case-block {
+    margin-bottom: 48px;
+  }
+
+  .case-block h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #6C63FF;
+  }
+
+  .case-block p {
+    color: #A8A8C0;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .case-image {
+    
+    border-radius: 12px;
+    aspect-ratio: 16/9;
+    margin: 40px 0;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .case-image img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 60px 80px;
+    background: #0D0D12;
+    border-top: 1px solid #1E1E28;
+    text-align: center;
+  }
+
+  .footer p {
+    color: #5E5E72;
+    font-size: 14px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+    .main {
+      margin-left: 0;
+    }
+    .hero {
+      padding: 60px 40px;
+    }
+    .hero h1 {
+      font-size: 42px;
+    }
+    section {
+      padding: 60px 40px;
+    }
+    .case-hero {
+      padding: 40px;
+    }
+    .case-content {
+      padding: 40px;
+    }
+    .project-item {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 32px;
+    }
+    .section-title {
+      font-size: 28px;
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1A1A24;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #3E3E4A;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5E5E72;
+  }
+</style>
+</head>
+<body>
+
+<!-- Sidebar Navigation -->
+<div class="sidebar">
+  <div>
+    <div class="logo">
+      <h1>LORRAINE NGWENYA</h1>
+      <p>Computer Science Student</p>
+    </div>
+    <div class="nav-links">
+      <a href="#work" class="nav-link active">
+        <span class="nav-icon">⌘</span>
+        <span>Work</span>
+      </a>
+      <a href="#todo" class="nav-link">
+        <span class="nav-icon">◈</span>
+        <span>To-Do Case</span>
+      </a>
+      <a href="#music" class="nav-link">
+        <span class="nav-icon">♪</span>
+        <span>Music Case</span>
+      </a>
+      <a href="#website" class="nav-link">
+        <span class="nav-icon">◧</span>
+        <span>Website Case</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+  
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">About ME</div>
+      <h1>Usability & simplicity first.</h1>
+      <p>I design digital experiences that are intuitive, accessible, and human-centered. Currently studying computer scince with an interest in design & frontend development</p>
+    </div>
+  </div>
+
+  <!-- Work Section -->
+  <section id="work">
+    <div class="section-header">
+      <div class="section-label">PROJECTS</div>
+      <div class="section-title">Selected work</div>
+    </div>
+    <div class="projects-grid">
+      
+      <div class="project-item">
+        <div class="project-image">
+          <div class="project-placeholder"><img class="project-placeholder" src="images/to_do_thumbnail.png" alt="Project screenshot"></div>
+        </div>
+        <div class="project-info">
+          <h3>To-Do App</h3>
+          <div class="project-tags">
+            <span class="tag">Wireframing</span>
+            <span class="tag">Layout</span>
+            <span class="tag">Figma</span>
+          </div>
+          <p>A task management app focused on reducing cognitive load and making task entry fast and intuitive.</p>
+          <a href="#todo" class="project-link">View case study →</a>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-info">
+          <h3>Music Player</h3>
+          <div class="project-tags">
+            <span class="tag">Visual Design</span>
+            <span class="tag">Prototyping</span>
+            <span class="tag">Wireframing</span>
+          </div>
+          <p>A clean music player designed for one-handed use and quick access to playback controls.</p>
+          <a href="#music" class="project-link">View case study →</a>
+        </div>
+        <div class="project-image">
+          <div class="project-placeholder"><img class="project-placeholder" src="images/MP_thumbnail.png" alt="Project screenshot"></div>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-image">
+          <div class="project-placeholder"><img class="project-placeholder" src="images/web_thumbnail.png" alt="Project screenshot"></div>
+        </div>
+        <div class="project-info">
+          <h3>Website Design</h3>
+          <div class="project-tags">
+            <span class="tag">Figma</span>
+            <span class="tag">Visual Design</span>
+            <span class="tag">Prototyping</span>
+          </div>
+          <p>A content-heavy website organized for better scannability and reduced cognitive load.</p>
+          <a href="#website" class="project-link">View case study →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TO-DO CASE STUDY -->
+  <section id="todo" class="case-study">
+    <div class="case-hero">
+      <div class="section-label">CASE STUDY</div>
+      <h2>To-Do App</h2>
+      <p style="color: #8E8EA8;">From cognitive overload to clarity</p>
+    </div>
+    <div class="case-content">
+      <div class="case-block">
+        <h3>01 Problem</h3>
+        <p>Users forget tasks and struggle with complex apps.</p>
+      </div>
+      <div class="case-block">
+        <h3>02 Research</h3>
+        <p>Existing apps are cluttered and unclear.</p>
+      </div>
+      <div class="case-block">
+        <h3>03 Ideation</h3>
+        <p>Focused on simple vertical layout.</p>
+      </div>
+      <div class="case-block">
+        <h3>04 Wireframes</h3>
+        <div class="case-image"><img class="project-placeholder" src="images/to_do_wireframe.png" alt="Case study image"></div>
+      </div>
+      <div class="case-block">
+        <h3>05 Prototype</h3>
+        <div class="case-image"><img class="project-placeholder" src="images/to_do_prototype.png" alt="Case study image"></div>
+      </div>
+      <div class="case-block">
+        <h3>06 Final</h3>
+        <div class="case-image"><img class="project-placeholder" src="images/to_do_final.png" alt="Case study image"></div>
+      </div>
+      <div class="case-block">
+        <h3>07 What Worked</h3>
+        <p>Clear and easy to use with color-coded tasks.</p>
+      </div>
+      <div class="case-block">
+        <h3>08 Improvements</h3>
+        <p>Add reminders and usability testing.</p>
+      </div>
+      <div class="case-block">
+        <h3>UX Laws Applied</h3>
+        <p>Hick's Law – reduced choices<br>Fitts's Law – large buttons<br>Gestalt – grouping tasks<br>Von Restorff – highlight actions<br>Jakob's Law – familiar UI<br>Cognitive Load – simple layout<br>Colour Psychology – task states<br>F & Z Pattern – readable flow</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MUSIC CASE STUDY -->
+  <section id="music" class="case-study">
+    <div class="case-hero">
+      <div class="section-label">CASE STUDY</div>
+      <h2>Music Player</h2>
+      <p style="color: #8E8EA8;">Clean controls for better listening</p>
+    </div>
+    <div class="case-content">
+      <div class="case-block">
+        <h3>01 Problem</h3>
+        <p>Music apps can feel cluttered and hard to navigate.</p>
+      </div>
+      <div class="case-block">
+        <h3>02 Research</h3>
+        <p>Users struggle to quickly find controls and navigate playlists.</p>
+      </div>
+      <div class="case-block">
+        <h3>03 Ideation</h3>
+        <p>Focused on large controls and minimal layout.</p>
+      </div>
+      <div class="case-block">
+        <h3>04 Wireframes</h3>
+        <div class="case-image"><img class="project-placeholder" src="images/MP_wireframe.png" alt="Case study image"></div>
+      </div>
+      <div class="case-block">
+        <h3>05 Prototype</h3>
+        <div class="case-image"><img class="project-placeholder" src="images/MP_prototype.png" alt="Case study image"></div>
+      </div>
+      <div class="case-block">
+        <h3>06 Final</h3>
+        <div class="case-image"><img class="project-placeholder" src="images/MP_final.png" alt="Case study image"></div>
+      </div>
+      <div class="case-block">
+        <h3>07 What Worked</h3>
+        <p>Simple navigation and clear playback controls.</p>
+      </div>
+      <div class="case-block">
+        <h3>08 Improvements</h3>
+        <p>Add search and playlist customization.</p>
+      </div>
+      <div class="case-block">
+        <h3>UX Laws Applied</h3>
+        <p>Fitts's Law – large play buttons<br>Hick's Law – fewer options<br>Gestalt – grouped controls<br>Von Restorff – highlight play button</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEBSITE CASE STUDY -->
+  <section id="website" class="case-study">
+    <div class="case-hero">
+      <div class="section-label">CASE STUDY</div>
+      <h2>Website Design</h2>
+      <p style="color: #8E8EA8;">Structure that guides the eye</p>
+    </div>
+    <div class="case-content">
+      <div class="case-block">
+        <h3>01 Problem</h3>
+        <p>Websites often overload users with too much content.</p>
+      </div>
+      <div class="case-block">
+        <h3>02 Research</h3>
+        <p>Users scan content and ignore cluttered layouts.</p>
+      </div>
+      <div class="case-block">
+        <h3>03 Ideation</h3>
+        <p>Focused on structured layout and spacing.</p>
+      </div>
+      <div class="case-block">
+        <h3>04 Wireframes</h3>
+        <div class="case-image"><img class="project-placeholder" src="images/Web_Wireframe.png" alt="Case study image"></div>
+      </div>
+      <div class="case-block">
+        <h3>05 Prototype</h3>
+        <div class="case-image"><img class="project-placeholder" src="images/web_prototype.png"alt="Case study image"></div>
+      </div>
+      <div class="case-block">
+        <h3>06 Final</h3>
+        <div class="case-image"><img class="project-placeholder" src="images/web_final.png"" alt="Case study image"></div>
+      </div>
+      <div class="case-block">
+        <h3>07 What Worked</h3>
+        <p>Clear hierarchy and easy navigation.</p>
+      </div>
+      <div class="case-block">
+        <h3>08 Improvements</h3>
+        <p>Improve responsiveness and accessibility.</p>
+      </div>
+      <div class="case-block">
+        <h3>UX Laws Applied</h3>
+        <p>F Pattern – layout scanning<br>Gestalt – grouping sections<br>Jakob's Law – familiar layout<br>Cognitive Load – reduced clutter</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>UX Portfolio</p>
+  </div>
+
+</div>
+
+<script>
+  // Simple active nav highlight on scroll
+  const sections = document.querySelectorAll('section, .hero');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (scrollY >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('.nav-link, .project-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
